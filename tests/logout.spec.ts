@@ -15,4 +15,12 @@ test.describe('Logout flow', () => {
     await page.locator('.oxd-userdropdown-tab').click();
     await expect(page.locator('a[href="/web/index.php/auth/logout"]')).toBeVisible();
   });
+
+  test('shoulddisplay error messagewith invalidcredentials',async({ page}) => {
+const loginPage= new LoginPage(page);
+await loginPage.open();
+await loginPage.login('invalid@example.com', 'wrongpassword');
+const errorMessage= await loginPage.getErrorMessage();
+expect(errorMessage).toBeTruthy();
+});
 });
